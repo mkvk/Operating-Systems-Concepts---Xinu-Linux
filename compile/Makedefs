@@ -7,14 +7,14 @@ PLATFORM=arm-qemu
 #  and comment or delete the other ones.
 
 # For the Linux VM
-COMPILER_ROOT   =      /usr/bin/arm-none-eabi-
-LIBGCC_LOC      =      /usr/lib/gcc/arm-none-eabi/5.4.1
-CONF_LFLAGS = -lfl
+#COMPILER_ROOT   =      /usr/bin/arm-none-eabi-
+#LIBGCC_LOC      =      /usr/lib/gcc/arm-none-eabi/5.4.1
+#CONF_LFLAGS = -lfl
 
 # For SoIC Linux machines
-#COMPILER_ROOT   =      /l/arm2/devtools/bin/arm-none-eabi-
-#LIBGCC_LOC      =      /l/arm2/devtools/lib/gcc/arm-none-eabi/4.8.4
-#CONF_LFLAGS = -lfl
+COMPILER_ROOT   =      /l/arm2/devtools/bin/arm-none-eabi-
+LIBGCC_LOC      =      /l/arm2/devtools/lib/gcc/arm-none-eabi/4.8.4
+CONF_LFLAGS = -lfl
 
 # For Macports on macOS
 #COMPILER_ROOT   =      /opt/local/bin/arm-none-eabi-

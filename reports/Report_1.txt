@@ -1,0 +1,10 @@
+/* Part 3 */
+Orphan Process
+	A process turns into an Orphan process, if it's parent process has finished or terminated in prior to the completion of this(child) process. In other words, the parent of an orphan process does not exist. By means of automatic re-parenting, the orphaned process will now be adopted by the init process.
+
+Zombie Process
+	A zombie process, also known as defunct process, is a process which has finished execution and still it's entry is present in the process table. So, the child process continues to remain in a zombie state until it's parent process acknowledges it's execution before the entry is completely removed. The parent could execute the wait system call and read the child's exit status, thus ending the zombie process. However, if you wish to create another child process whose process ID needs to be compulsorily different from the previosly created child process,then the entry of the zombie process needs to be left in the process table.  
+
+Changes that occur when Child process calls exec()
+	As soon as a call is made to exec(), a new program will be loaded into the current process space and it's execution begins. So here, the child process will be just replaced by a new program, no new process ID is generated. The parent will be in a waiting state until the execution of exec() is completed. After exec() program finishes running, the remaining part of parent process is executed.  
+
