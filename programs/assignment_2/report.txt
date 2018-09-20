@@ -1,0 +1,25 @@
+g 061 0
+1000 - 0.053
+50 039
+
+1	051 4
+10 	54 2
+100 	51 3
+200	52 4 1
+400	51  2 3 5 6
+600	54 5
+800	40 2
+1000	44
+1200		60
+1400	61
+1600	65
+1800	71 2
+2000	77 3 6
+
+AOS Assignment 2 Report
+
+Design
+Multi-threaded programming is implemented using pthreads library present in C language. For large input files executing grep command takes a considerable amount of time when compared to multi-threaded programming. Threads allow multiple lines of flow which makes parallel implementation possible. The execution time greatly reduces if we process the input using a certain number of threads.
+
+However, there is no specific number of threads we can implement that works best for each program input. In general, more threads are required for larger files compared to small sized input files. I have split the input text file in the form of multiple chunks of lines where each chunk (set of lines) are assigned for each thread that I have created to simulate grep command. I have got the total count of lines present in the input file by counting the “\n” character occurrence’s.   If number of threads to be created is not explicitly given, I am setting it to total lines divided by chunk size. I have tried chunk sizes of 2000, 1000 and 50 for Sherlock  
+
