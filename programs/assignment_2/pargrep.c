@@ -1,11 +1,11 @@
 // Program to implement grep command using threads
 
-#include<pthread.h>
+#include<pthread.h>	// import pthread library
 #include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
 
-char* grepstr;		// grepstring to me matched
+char* grepstr;		// grepstring to be matched
 FILE *fp;		// pointer to the input text file
 long int lcount;
 int limit,tc;

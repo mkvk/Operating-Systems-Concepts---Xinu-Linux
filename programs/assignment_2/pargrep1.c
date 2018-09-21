@@ -10,20 +10,14 @@ long int lcount; int tc;
 int limit;
 long int linecount;
 pthread_mutex_t thmutex;
-//size_t linesize = 0;
-//char* line=NULL;
-//ssize_t chars;
 
 void *grepcmd(void *f) {
 	pthread_mutex_lock(&thmutex); tc++;
 	char line[200];
-	int llimit=(tc) * limit; // printf("1\n");
-//	while(((chars=getline(&line,&linesize,f)) != -1)&&(lcount<=llimit) ) { //printf("%c line\n",line);
-	while( (fscanf( f, "%[^\n]\n", line )!= EOF )&&(lcount<=llimit) ) { //printf("%s\n",line);
+	int llimit=(tc) * limit; 
+	while( (fscanf( f, "%[^\n]\n", line )!= EOF )&&(lcount<=llimit) ) { 
                 if(strstr(line, grepstr) != NULL ) {
                         printf("%s\n",line);
-//                     printf("1\n");
-//                     fwrite(line,chars,1,stdout);
                 }
 		lcount++;
 	} 
@@ -32,17 +26,15 @@ void *grepcmd(void *f) {
 }
 
 int main(int argc, char* argv[]) {
-//	FILE *fp;	
-	int th;
+
 	char ch;
-	int rvt,maxth;
-	
+	int th,rvt,maxth;
 	lcount=0;limit=0;linecount=0;th=0;rvt=0;maxth=0;tc=0;
 		
-	if(argc==4) {
-		maxth=atoi(argv[1]);
-		grepstr=argv[2];
-		fp=fopen(argv[3],"r");
+	if(argc==5) {
+		maxth=atoi(argv[2]);
+		grepstr=argv[3];
+		fp=fopen(argv[4],"r");
 	}
 	else {
 		limit=10;
@@ -53,8 +45,8 @@ int main(int argc, char* argv[]) {
 	for(ch=getc(fp);ch!=EOF;ch=getc(fp)) {
 		if(ch=='\n') linecount++; }	
 
-	if(argc==4) {
-		limit=linecount/maxth;fp=fopen(argv[3],"r"); }
+	if(argc==5) {
+		limit=linecount/maxth;fp=fopen(argv[4],"r"); }
 	else {
 		maxth=linecount/limit;
 		maxth++;
