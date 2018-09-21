@@ -22,7 +22,7 @@ void *grepcmd(void *f) {
 	int llimit=(tc) * limit;
 	// get each line and check if the matching word is present
 	while(((chars=getline(&line,&linesize,f)) != -1)&&(lcount<=llimit) ) { 
-                if(strstr(line, grepstr) != NULL ) {
+                if(strstr(line, grepstr) != NULL) {
                      fwrite(line,chars,1,stdout);	//output the matching line
                 }
 		lcount++;
@@ -35,30 +35,46 @@ int main(int argc, char* argv[]) {
 	
 	char ch;
 	int th,rvt,maxth;
+	char* bfname = "t.txt";
 	lcount=0;limit=0;linecount=0;th=0;rvt=0;maxth=0;tc=0;
-			
-	if(argc==5) {
+	FILE *fpb=fopen(bfname,"w+");		// write stdin contents to a file
+	char *bline;
+	size_t blen=0;
+	ssize_t bread;
+
+	if(argc==5||argc==4) {			// if no.of threads is given explicitly
 		maxth=atoi(argv[2]);
 		grepstr=argv[3];
-		fp=fopen(argv[4],"r");
+		if(argc==5)	fp=fopen(argv[4],"r");
 	}
-	else if(argc==3) {
+	else if(argc==3||argc==2) {		// if no.of threads is not provided in input
 		limit=50;
-		fp=fopen(argv[2],"r");
+		if(argc==3)	fp=fopen(argv[2],"r");
 		grepstr=argv[1];
 	}
 
-	for(ch=getc(fp);ch!=EOF;ch=getc(fp)) 
-		if(ch=='\n') linecount++; 	// count total no.of lines in text file	
-
-	if(argc==5) {
-		limit=linecount/maxth; 
-		fp=fopen(argv[4],"r"); 
+	if(argc==5||argc==3) {
+		for(ch=getc(fp);ch!=EOF;ch=getc(fp)) 
+			if(ch=='\n') linecount++; 	// count total no.of lines in text file	
 	}
-	else if(argc==3) {
+	else {
+		while((bread=getline(&bline,&blen,stdin))!=-1) fprintf(fpb,bline);
+		fclose(fpb);
+		fpb=fopen(bfname,"r");
+		for(ch=getc(fpb);ch!=EOF;ch=getc(fpb)) if(ch=='\n') linecount++;
+		fclose(fpb);
+	}
+
+	if(argc==5||argc==4) {
+		limit=linecount/maxth; 
+		if(argc==5)	fp=fopen(argv[4],"r");
+		else 		fp=fopen(bfname ,"r"); 
+	}
+	else if(argc==3||argc==2) {
 		maxth=linecount/limit;
 		maxth++;
-		fp=fopen(argv[2],"r");
+		if(argc==3)	fp=fopen(argv[2],"r");
+		else 		fp=fopen(bfname,"r");
 	}
 
 	pthread_t threads[maxth];	// declare required #threads as per the equation above
