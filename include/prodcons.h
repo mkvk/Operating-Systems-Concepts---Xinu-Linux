@@ -1,3 +1,6 @@
+//printf("include prodcons.h\n");
+
+#include <xinu.h>
 /*Global variable for producer consumer*/
 extern int n; /*this is just declaration*/
 
@@ -7,4 +10,3 @@ void producer(int);
 
 /* Semaphore Declarations */
 extern sid32 produced, consumed;
-  
