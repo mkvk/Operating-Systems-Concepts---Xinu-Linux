@@ -1,0 +1,21 @@
+﻿AOS Assignment 4 - Report
+        Murali Kammili
+
+
+The test file “xmalloc_test.c “ present in shell folder contains multiple xmalloc and xfree calls to create memory and free memory respectively. We call xmalloc_init method only once at the beginning. xmalloc accepts an argument, which is the number of bytes to be allocated and returns a pointer. While calling xfree method we accept the pointer returned by xmalloc as an argument to free the memory allocated by respective xmalloc call. My test file contains xheap_snapshot method called at multiple instances to get a picture of memory allocation at that particular moment.
+
+
+The file “xmalloc.c” in system folder consists of source code to implement functionalities of above discussed methods. In xmalloc_init method, I am initializing the buffer pool table by calling bufinit method. For the purpose of saving time, I have declared a static array containing powers of 2 till 8192. Since the minimum number of buffer size is 8 Bytes and maximum is 8192 Bytes on Xinu, I am allocating memory for buffer pool of different buffer sizes varying from 8 - 8192 for each pool. In each pool I am allocating maximum possible buffers in Xinu which is 2048. For example in a pool of buffer size 8, I am allocating 2048 buffers each of 8 bytes. The pool ids of each pool are saved in an array pool_id[]. 
+
+
+In xmalloc method, depending on the buffer size, I am allocating the the request to a pool which minimizes the fragmentation. In other words, I am allocating buffer(s) to a pool which is the next nearest multiple of 2 of the requested bytes passed as argument. If the requested size is greater than 8192, then I am tracing from the 8192 byte buffer pool till 8 byte buffer pool, until I find a pool of sufficient buffers which can fulfill the request. In xfree method, I am freeing the memory allocated by xmalloc based on the pointer input. I am freeing all the allocated buffers in a pool which are previously allocated through respective xmalloc, to be reused again. Arithmetic operations on variables required for xheap_snapshot() are implemented simultaneously in the xmalloc and xfree methods. 
+
+
+In the sample test-case file, “xmalloc_test.c”, I have tried various scenarios to test memory allocations of same and different pools and for various memory request sizes. I have also tried to free the memory immediately after a xmalloc, at the end of program and not calling xfree at all, to test the correctness at different instances. My program also outputs an error message if the maximum memory available on Xinu is exhausted and we try to call xmalloc method. 
+
+
+E.g : consider xmalloc(100)
+I am allocating this request to a buffer of size 128 (next greatest power of 2 for 100). 
+So all the memory requests from 65-128, first try for 128 buffer if it is available.
+After xfree, the 128 bytes will be again made available to the buffer pool.
+This procedure minimizes the fragmentation.
