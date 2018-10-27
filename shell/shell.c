@@ -3,6 +3,7 @@
 #include <xinu.h>
 #include <stdio.h>
 #include "shprototypes.h"
+#include "xmalloc.h"
 
 /************************************************************************/
 /* Table of Xinu shell commands and the function associated with each	*/
@@ -17,6 +18,7 @@ const	struct	cmdent	cmdtab[] = {
 	{"exit",	TRUE,	xsh_exit},
 	{"hello",	FALSE,	xsh_hello},
 	{"prodcons",	FALSE,	xsh_prodcons},
+	{"xmalloc",	FALSE,	xmalloc_test},
 	{"help",	FALSE,	xsh_help},
 	{"kill",	TRUE,	xsh_kill},
 	{"memdump",	FALSE,	xsh_memdump},
