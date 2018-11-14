@@ -1,6 +1,7 @@
 // cache implemented using LRU
+// this code is commented to avoid conflict with arc version while calling test file
 
-
+/*
 #include<xinu.h>
 #include<xmalloc.h>
 #include<kv.h>
@@ -217,3 +218,4 @@ char** most_popular_keys(int k) {
 	}
 	return keys[z+1];
 }
+*/
