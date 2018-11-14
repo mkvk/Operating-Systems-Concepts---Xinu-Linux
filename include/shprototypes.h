@@ -37,6 +37,9 @@ extern shellcmd xsh_prodcons	(int32,	char *[]);
 /* in file xsh_xmemory.c */
 extern shellcmd xmalloc_test	(int32, char *[]);
 
+/* in file xsh_xcache.c */
+extern shellcmd xcache_test	(int32, char *[]);
+
 /* in file xsh_help.c */
 extern	shellcmd  xsh_help	(int32, char *[]);
 
