@@ -10,9 +10,9 @@
 #define O_RDWR 2
 
 #define FILENAMELEN 32
-#define INODEBLOCKS 12
-#define INODEDIRECTBLOCKS (INODEBLOCKS - 2)
-#define DIRECTORY_SIZE 16
+#define INODEBLOCKS 12 
+#define INODEDIRECTBLOCKS (INODEBLOCKS - 2) 
+#define DIRECTORY_SIZE 16 
 
 #define MDEV_BLOCK_SIZE 512
 #define MDEV_NUM_BLOCKS 512
@@ -24,11 +24,13 @@
 /* Structure of inode*/
 struct inode {
   int id;
-  short int type;
+  short int type; // file or to a directory
+  // If the type of the inode is a directory, then the data blocks of the inode contain a directory structure ( struct directory)
   short int nlink;
   int device;
-  int size;
-  int blocks[INODEBLOCKS];
+  int size; // how many bytes the file contains
+  int blocks[INODEBLOCKS]; // ?! big files ? // If the type is a file, the data for a file is stored in the block numbers indicated in the blocks array of the inode. 
+  //The index of the block in the array indicates the position of the block in the file. 
 };
 
 /*File states to check if file is open or closed*/
@@ -41,6 +43,7 @@ struct filetable {
   int fileptr;
   struct dirent *de;
   struct inode in;
+  int mode; // added extra to track mode of file
 };
 
 /*Struct to store directory entry*/
@@ -99,4 +102,3 @@ void fs_printfreemask(void);
 void fs_print_fsd(void);
 
 #endif /* FS_H */
-
